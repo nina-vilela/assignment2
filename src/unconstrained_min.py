@@ -79,7 +79,6 @@ def line_search(f, x0, step_size, obj_tol, param_tol, max_iter, dir_selection_me
 
 
 def newton_dir(gradient, hessian):
-
     return LA.solve(hessian, -gradient)
 
 

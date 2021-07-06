@@ -41,3 +41,45 @@ def f2(x, hessian_flag=False):
 def f3(x, hessian_flag=False):
     y = 2*x[0] + 2*x[1]
     return y, numpy.array([2])
+
+
+def qp(x):
+    y = numpy.array(x[0]**2 + x[1]**2 + (x[2] + 1)**2)
+    grad = numpy.array([2 * x[0], 2 * x[1], 2 * (x[2]+1)])
+    hess = numpy.array([[2, 0, 0], [0, 2, 0], [0, 0, 2]])
+    obj = {'y':y, 'grad':grad, 'hess':hess}
+
+    y1 = -x[0]
+    grad1 = numpy.array([-1, 0, 0])
+    hess = numpy.array([[0, 0, 0], [0, 0, 0], [0, 0, 0]])
+
+    y2 = -x[1]
+    grad2 = numpy.array([0, -1, 0])
+
+    y3 = -x[2]
+    grad3 = numpy.array([0, 0, -1])
+
+    return obj, numpy.array([y1, y2, y3]), numpy.array([grad1, grad2, grad3]), numpy.array([hess, hess, hess])
+
+
+def lp(x):
+    y = -x[0] - x[1]
+    grad = numpy.array([-1, -1])
+    hess = numpy.zeros((2, 2))
+    obj = {'y': y, 'grad': grad, 'hess': hess}
+
+    y1 = -x[0] - x[1] + 1
+    grad1 = numpy.array([-1, -1])
+
+    y2 = x[1] - 1
+    grad2 = numpy.array([0, 1])
+
+    y3 = x[0] - 2
+    grad3 = numpy.array([1, 0])
+
+    y4 = -x[1]
+    grad4 = numpy.array([0, -1])
+
+    return obj, numpy.array([y1, y2, y3, y4]), numpy.array([grad1, grad2, grad3, grad4]), \
+        numpy.array([hess, hess, hess, hess])
+
